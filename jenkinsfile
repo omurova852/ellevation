@@ -1,0 +1,26 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Initialize') {
+      steps {
+        sh 'make init'
+      }
+    }
+    stage('Terraform Plan') {
+      steps {
+        sh 'make plan'
+      }
+    }
+    stage('Terraform Apply') {
+      steps {
+        sh 'make apply'
+      }
+    }
+  }
+  post {
+    always {
+      sh 'make destroy'  // Clean up resources after each build
+    }
+  }
+}
